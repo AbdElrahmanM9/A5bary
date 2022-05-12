@@ -1,0 +1,49 @@
+﻿@model IEnumerable<NewsWebApp.Models.PostType>
+
+@{
+    ViewBag.Title = "Admin Home Page";
+    Layout = "~/Views/Shared/_DashBoard.cshtml";
+}
+
+
+
+<div class="jumbotron">
+    <h1>Home page</h1>
+
+</div>
+
+
+@foreach (var item in Model)
+
+{
+    <div class="panel panel-default">
+        <h1 class="panel-heading">@Html.DisplayFor(modelItem => item.ArticleType)</h1>
+
+        <div class="row">
+            @foreach (var subitem in item.Posts)
+            {
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="~/Uploads/@subitem.ArticleImage" />
+                        <div class="thumbnail-body">
+                            <h3>@Html.DisplayFor(modelItem => subitem.ArticleTitle)</h3>
+                            <p>@Html.DisplayFor(modelItem => subitem.ArticleBody)</p>
+                            <h5> Written By @Html.DisplayFor(modelItem => subitem.User.UserName)</h5>
+                            <h5>@Html.DisplayFor(modelItem => subitem.Like) Likes <br /> @Html.DisplayFor(modelItem => subitem.DisLike) DisLikes</h5>
+
+                            @Html.ActionLink("Show Details", "Details", new { postId = subitem.PostId }, new { @class = "btn btn-primary" })
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            }
+        </div>
+
+    </div>
+
+
+}

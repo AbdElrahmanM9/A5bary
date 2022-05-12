@@ -1,0 +1,90 @@
+﻿<link href="~/Content/Style.css" rel="stylesheet" />
+@model NewsWebApp.Models.Post
+@using NewsWebApp.Models
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Details";
+
+    ApplicationDbContext db = new ApplicationDbContext();
+    var UserId = User.Identity.GetUserId();
+    var user = db.Users.Where(a => a.Id == UserId).SingleOrDefault();
+    if (user.UserType == "Editor")
+    {
+
+        Layout = "~/Views/Shared/_Factory.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_DashBoard.cshtml";
+
+    } }
+<h3>Post details</h3>
+
+<div>
+    <hr />
+    <table style="width:70%" class="table table-striped table-bordered table-hover">
+        <tr>
+            <td style="width:20%">
+                @Html.DisplayNameFor(model => model.PostType.ArticleType)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.PostType.ArticleType)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleTitle)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ArticleTitle)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleBody)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ArticleBody)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleImage)
+            </td>
+            <td>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.ArticleImage)" class="thumbnail" style="width:48px; height:48px;" />
+            </td>
+
+        </tr>
+
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.NumberOfViewers)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NumberOfViewers)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </td>
+        </tr>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

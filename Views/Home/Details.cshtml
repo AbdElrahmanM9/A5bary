@@ -1,0 +1,79 @@
+﻿@model NewsWebApp.Models.Post
+
+<div>
+    <hr />
+    <table style="width:70%" class="table table-striped table-bordered table-hover">
+        <tr>
+            <td style="width:20%">
+                @Html.DisplayNameFor(model => model.PostType.ArticleType)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.PostType.ArticleType)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleTitle)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ArticleTitle)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleBody)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ArticleBody)
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ArticleImage)
+            </td>
+            <td>
+                <img src="~/Uploads/@Html.DisplayFor(model => model.ArticleImage)" class="thumbnail" style="width:48px; height:48px;" />
+            </td>
+
+        </tr>
+
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.NumberOfViewers)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NumberOfViewers)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </td>
+        </tr>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Like", "Like", new { id = Model.PostId }, new { @class = "btn btn-success" })
+    @Html.ActionLink("DisLike", "DisLike", new { id = Model.PostId }, new { @class = "btn btn-danger" })
+    
+    @Html.ActionLink("Save Post", "SaveAction", new { id = Model.PostId }, new { @class = "btn btn-success" }) 
+    <br />
+    <br />
+    @Html.ActionLink("Ask Question?", "Ask", new { id = Model.PostId }, new { @class = "btn btn-success" }) 
+    <br />
+    <br />
+    @Html.ActionLink("Back to Home", "Index", new { @class = "btn btn-default" }) 
+</p>

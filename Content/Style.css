@@ -1,0 +1,37 @@
+﻿a.btn.btn-primary {
+    box-shadow: 0px 10px 20px -10px #1376c5;
+    background: #2196F3;
+    border: none;
+}
+
+.thumbnail
+{
+    background: #fff;
+    margin: 20px 15px 20px;
+    border-radius: 15px;
+    padding-top: 1px;
+    box-shadow: 0px 14px 22px -9px #bbcbd8;
+    border: none;
+}
+
+.thumbnail-body {
+    padding: 10px;
+}
+
+#SearchName
+{
+    border: none;
+    border-radius: 0px;
+    margin-top: 10px;
+    padding: 5px 20px;
+}
+
+.navbar-inverse {
+    background-color: #2196f3 !important;
+    border-color: #2196f3 !important;
+    color: #fff !important;
+}
+
+.navbar-inverse a {
+    color: #fff !important;
+}

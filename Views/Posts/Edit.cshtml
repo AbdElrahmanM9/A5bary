@@ -1,0 +1,123 @@
+﻿@model NewsWebApp.Models.Post
+@using NewsWebApp.Models
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.Owin;
+@{
+    ViewBag.Title = "Posts";
+
+    ApplicationDbContext db = new ApplicationDbContext();
+    var UserId = User.Identity.GetUserId();
+    var user = db.Users.Where(a => a.Id == UserId).SingleOrDefault();
+    if (user.UserType == "Editor")
+    {
+
+        Layout = "~/Views/Shared/_Factory.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_DashBoard.cshtml";
+
+    } }
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Post</h4>
+        <hr />
+        <div class="alert alert-danger" id="error-div" style="display:none">
+            <samp id="view-err">
+            </samp>
+        </div>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PostId)
+        @Html.HiddenFor(model => model.ArticleImage)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArticleTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArticleTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ArticleTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArticleBody, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArticleBody, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ArticleBody, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArticleImage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="upload" id="postImage" />
+                @Html.ValidationMessageFor(model => model.ArticleImage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumberOfViewers, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumberOfViewers, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumberOfViewers, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReleaseDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReleaseDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReleaseDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" id="save" />
+            </div>
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $("#save").click(function () {
+
+                if ($("#postImage").val() != "") {
+                    var filename = document.getElementById("postImage").value;
+
+                    var extensionImg = filename.substr(filename.lastIndexOf('.') + 1);
+                    var validExtensions = ['jpg', 'png', 'gif', 'bmp'];
+                    if ($.inArray(extensionImg, validExtensions) == -1) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").html("");
+                        $("#view-err").append("رجاء قم بختيار امتداد صحيح للصورة");
+                        return false;
+                    }
+                    var myFileSize = document.getElementById("postImage").files[0].size / 1024 / 1024;
+
+                    if (myFileSize > 2) {
+                        $("#error-div").fadeIn();
+                        $("#view-err").html("");
+                        $("#view-err").append("رجاء قم بختيار صورة حجمها اقل من 2 ميجا بايت");
+                        return false;
+                    }
+                }
+            });
+        });
+    </script>
+
+}

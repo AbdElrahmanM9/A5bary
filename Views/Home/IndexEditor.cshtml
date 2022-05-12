@@ -1,0 +1,48 @@
+﻿<link href="~/Content/Style.css" rel="stylesheet" />
+@model IEnumerable<NewsWebApp.Models.PostType>
+
+@{
+    ViewBag.Title = "Editor Home Page";
+    Layout = "~/Views/Shared/_Factory.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Home page</h1>
+
+</div>
+
+
+@foreach (var item in Model)
+
+{
+    <div class="panel panel-default">
+        <h2 style="color:mediumblue" class="panel-heading">@Html.DisplayFor(modelItem => item.ArticleType)</h2>
+
+        <div class="row">
+            @foreach (var subitem in item.Posts)
+            {
+
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="~/Uploads/@subitem.ArticleImage" />
+                        <div class="thumbnail-body">
+                            <h3>@Html.DisplayFor(modelItem => subitem.ArticleTitle)</h3>
+                            <p>@Html.DisplayFor(modelItem => subitem.ArticleBody)</p>
+                            <h5> Written By @Html.DisplayFor(modelItem => subitem.User.UserName)</h5>
+                            <h5>@Html.DisplayFor(modelItem => subitem.Like) Likes <br /> @Html.DisplayFor(modelItem => subitem.DisLike) DisLikes</h5>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            }
+        </div>
+
+
+    </div>
+
+
+}
